@@ -50,27 +50,27 @@ export function Projects() {
           whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true }}
           transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.3 }}
-          whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(99, 102, 241, 0.1)' }}
+          whileHover={{ y: -4 }}
           id="contact"
-          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-3xl border border-line/20 bg-gradient-to-br from-white/5 to-white/5 px-6 py-12 text-center backdrop-blur transition-all duration-300 sm:px-10 sm:py-16 hover:border-accent/30"
+          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-2xl border border-line/30 bg-surface/50 px-6 py-12 text-center backdrop-blur-sm transition-all duration-300 sm:px-10 sm:py-16 hover:border-line/50 hover:shadow-md"
         >
           <motion.p
-            className="flex items-center justify-center gap-2 text-lg font-semibold sm:text-xl"
-            whileHover={{ scale: 1.05 }}
+            className="flex items-center justify-center gap-2 text-base font-semibold text-muted sm:text-lg"
+            whileHover={{ scale: 1.02 }}
           >
-            Got an idea? <span aria-hidden="true">💡</span>
+            Got an idea? <span aria-hidden="true">→</span>
           </motion.p>
 
           <motion.h3
-            className="mt-3 text-2xl font-bold sm:text-3xl"
-            whileHover={{ color: '#6366f1' }}
+            className="mt-3 text-2xl font-bold text-ink transition-colors sm:text-3xl"
+            whileHover={{ color: 'var(--c-accent)' }}
           >
             Let's build something amazing together
           </motion.h3>
 
           <motion.p
-            className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg"
-            whileHover={{ color: 'rgba(255, 255, 255, 0.85)' }}
+            className="mt-4 text-sm leading-relaxed text-muted sm:text-base"
+            whileHover={{ opacity: 0.9 }}
           >
             I'm always interested in hearing about new projects, interesting ideas, and partnerships.
             Feel free to reach out!
@@ -83,7 +83,7 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
           >
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
               <Button
                 as="a"
                 href="https://wa.me/5588998427392?text=Ol%C3%A1%2C%20Rodrigo!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."

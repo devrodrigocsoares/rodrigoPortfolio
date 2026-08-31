@@ -3,5 +3,4 @@ export const heroDev: string[] = [
 'Software Engineer',
 'AI Engineer',
 'ML Engineer',
-'Generative AI Engineer',
 ]

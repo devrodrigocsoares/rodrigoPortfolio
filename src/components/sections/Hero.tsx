@@ -39,8 +39,8 @@ export function Hero() {
   const { textDev } = useTypewriter(heroDev,  { disabled: prefersReducedMotion })
 
   return (
-   <section id="top" className="relative overflow-hidden pb-20 pt-16 sm:pt-10 lg:pt-32 ">
-  <div className="container-page flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center text-center sm:items-start sm:text-left">
+   <section id="top" className="relative overflow-hidden pb-20 sm:pt-10 lg:pt-32 ">
+  <div className="container-page flex min-h-[calc(100vh-8rem)] flex-col items-center justify-center lg:text-center sm:items-start sm:text-left">
     <div className="mx-auto max-w-4xl">
 
       <motion.h1
@@ -48,13 +48,13 @@ export function Hero() {
         animate="show"
         custom={0}
         variants={blurInUp}
-        className="max-w-3xl whitespace-normal sm:whitespace-nowrap lg:text-4xl sm:text-3xl font-bold leading-[1.1] tracking-tight text-ink sm:text-6xl"
+        className="max-w-3xl whitespace-normal sm:whitespace-nowrap text-4xl font-bold leading-[1.1] tracking-tight text-ink "
       >
         Rodrigo
 
         <motion.span
           aria-hidden="true"
-          className="ml-2  text-accent-dim transition-colors hover:text-accent "
+          className="ml-2 text-accent-dim transition-colors hover:text-accent "
           whileHover={{ scale: 1.05 }}
         >
           {textDev}
@@ -62,7 +62,7 @@ export function Hero() {
         </motion.span>
 
         <span className="sr-only">
-          {heroDev.join(', ')}
+          {heroDev.join(',')}
         </span>
       </motion.h1>
 

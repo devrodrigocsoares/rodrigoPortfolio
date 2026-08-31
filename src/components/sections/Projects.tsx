@@ -1,11 +1,15 @@
 import { motion } from 'framer-motion'
 import { MessageSquare } from 'lucide-react'
-import { projects } from '@/data/projects'
+import { useGithubProjects } from '@/hooks/useGithubProjects'
 import { SectionTitle } from '@/components/ui/SectionTitle'
 import { ProjectCard } from '@/components/ui/ProjectCard'
+import { ProjectSkeleton } from '@/components/ui/ProjectSkeleton'
+import { ProjectsError } from '@/components/ui/ProjectsError'
 import { Button } from '@/components/ui/Button'
 
 export function Projects() {
+  const { data: projects, isLoading, error, retry } = useGithubProjects()
+
   return (
     <section id="projects" className="bg-navy py-24 text-white sm:py-28">
       <div className="container-page">
@@ -16,17 +20,23 @@ export function Projects() {
         />
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ duration: 0.45, delay: (index % 3) * 0.08, ease: 'easeOut' }}
-            >
-              <ProjectCard project={project} />
-            </motion.div>
-          ))}
+          {isLoading && <ProjectSkeleton />}
+
+          {error && !isLoading && <ProjectsError error={error} onRetry={retry} />}
+
+          {!isLoading &&
+            !error &&
+            projects.map((project, index) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.45, delay: (index % 3) * 0.08, ease: 'easeOut' }}
+              >
+                <ProjectCard project={project} />
+              </motion.div>
+            ))}
         </div>
 
         <div id="contact" className="mx-auto mt-24 max-w-xl scroll-mt-24 text-center">

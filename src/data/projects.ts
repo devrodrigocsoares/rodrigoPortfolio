@@ -1,8 +1,15 @@
 import { Project } from '@/types'
 
-// Swap in your real projects — title, description, tech stack, links, and
-// a screenshot under /public/images/projects/. Nine placeholders keep the
-// 3x3 grid from the prototype intact until then.
+/**
+ * DEPRECATED: Projects are now fetched dynamically from GitHub API
+ * See: src/hooks/useGithubProjects.ts
+ *
+ * This file is kept for reference and backward compatibility only.
+ * The Projects section now loads projects via useGithubProjects hook.
+ *
+ * To configure which GitHub repositories appear in the portfolio, see:
+ * src/config/github.ts
+ */
 export const projects: Project[] = Array.from({ length: 9 }, (_, index) => {
   const id = index + 1
   return {

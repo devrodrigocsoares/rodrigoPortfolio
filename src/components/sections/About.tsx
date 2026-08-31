@@ -25,7 +25,7 @@ const cardVariants = {
 }
 
 const iconVariants = {
-  hidden: { scale: 0, rotateZ: -180 },
+  hidden: { scale: 0.8, rotateZ: -180 },
   visible: (i: number) => ({
     scale: 1,
     rotateZ: 0,
@@ -33,7 +33,7 @@ const iconVariants = {
       type: 'spring',
       stiffness: 130,
       damping: 14,
-      delay: i * 0.1 + 0.2,
+      delay: i * 1,
     },
   }),
 }
@@ -45,7 +45,7 @@ export function About() {
         <motion.div
           className="mx-auto max-w-2xl text-center"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 0.8, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ type: 'spring', stiffness: 100, damping: 20 }}
         >
@@ -92,7 +92,7 @@ export function About() {
                     rotateZ: 360,
                     boxShadow: '0 12px 24px rgba(99, 102, 241, 0.3)',
                   }}
-                  className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white transition-all duration-300"
+                  className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white transition-all duration-300 sm:h-14 sm:w-14"
                 >
                   <Icon size={20} aria-hidden="true" />
                 </motion.span>
@@ -113,13 +113,13 @@ export function About() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 + 0.3 }}
                 >
-                  {area.groups.map((group, gIdx) => (
+                  {area.groups.map((group) => (
                     <motion.div
                       key={group.label}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 + gIdx * 0.05 + 0.4 }}
+                      transition={{ delay: index * 0.1 }}
                     >
                       <p className="text-xs font-semibold uppercase tracking-wide text-accent">
                         {group.label}

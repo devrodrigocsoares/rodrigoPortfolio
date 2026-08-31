@@ -57,24 +57,32 @@ export function Header() {
   }, [isMenuOpen])
 
   useEffect(() => {
-    const handleNavClick = (href: string) => {
-      setActiveSection(href)
-    }
+    const observers: IntersectionObserver[] = []
 
     navLinks.forEach((link) => {
       const element = document.querySelector(link.href)
-      if (element) {
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              handleNavClick(link.href)
-            }
-          },
-          { threshold: 0.5 }
-        )
-        observer.observe(element)
-      }
+      if (!element) return
+
+      // A thin horizontal band around the vertical center of the viewport,
+      // rather than "50% of the section visible". Sections taller than
+      // ~2x the viewport (e.g. #projects, with its full card grid + CTA)
+      // can never satisfy a 0.5 ratio threshold, so they'd never register
+      // as active. Watching for any crossing of the center band works
+      // regardless of how tall a section is.
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(link.href)
+          }
+        },
+        { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+      )
+
+      observer.observe(element)
+      observers.push(observer)
     })
+
+    return () => observers.forEach((observer) => observer.disconnect())
   }, [])
 
   return (
@@ -92,13 +100,39 @@ export function Header() {
         {/* Logo */}
         <motion.a
           href="#top"
-          className="text-2xl font-display tracking-tight text-ink transition-colors duration-200 hover:text-accent"
+          className="group relative text-2xl font-display tracking-tight text-ink transition-colors duration-200 hover:text-accent"
           aria-label="Rodrigo Soares, back to top"
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         >
-          {'{R}'}
+          {/* Mobile / touch: static mark, no crossfade, no reserved width */}
+          <span aria-hidden="true" className="md:hidden">
+            {'{R}'}
+          </span>
+
+          {/* Desktop: fixed-size wrapper (sized by the invisible longest
+              string) so the crossfade never changes the element's box and
+              never shifts the nav items around it. */}
+          <span className="relative hidden md:inline-flex md:items-center">
+            <span aria-hidden="true" className="invisible whitespace-nowrap">
+              rodrigosoares.dev
+            </span>
+
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 flex items-center whitespace-nowrap opacity-100 transition-all duration-300 ease-out group-hover:-translate-y-1 group-hover:opacity-0 group-focus-visible:-translate-y-1 group-focus-visible:opacity-0"
+            >
+              {'{R}'}
+            </span>
+
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 flex translate-y-1 items-center whitespace-nowrap opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100"
+            >
+              rodrigosoares.dev
+            </span>
+          </span>
         </motion.a>
 
         {/* Desktop Menu */}
@@ -177,7 +211,7 @@ export function Header() {
               className="relative block"
               whileHover={{ y: -1 }}
             >
-              Let's talk
+              Let&apos;s talk
             </motion.span>
           </motion.a>
         </motion.div>
@@ -291,7 +325,7 @@ export function Header() {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Let's talk
+                  Let&apos;s talk
                 </motion.a>
               </motion.li>
             </motion.ul>

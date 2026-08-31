@@ -7,7 +7,7 @@
     /* Light theme (default) — values are "R G B" so Tailwind can apply opacity modifiers. */
     --c-ink: 11 14 26;
     --c-paper: 255 255 255;
-    --c-surface: 255 255 255;
+    --c-surface: 248 249 252;
     --c-navy: 11 14 26;
     --c-muted: 91 96 114;
     --c-muted-light: 139 144 160;

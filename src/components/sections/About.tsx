@@ -49,12 +49,9 @@ export function About() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ type: 'spring', stiffness: 100, damping: 20 }}
         >
-          <h2 className="text-2xl font-bold sm:text-3xl">Hi, I'm Rodrigo. Nice to meet you!</h2>
-          <motion.p
-            className="mt-5 text-sm leading-relaxed text-white/65 sm:text-base"
-            whileHover={{ color: 'rgba(255, 255, 255, 0.8)' }}
-          >
-            My academic background includes a bachelor's degree in Information Systems and a
+          <h2 className="text-2xl font-bold sm:text-3xl">Hi, I&apos;m Rodrigo. Nice to meet you!</h2>
+          <motion.p className="mt-5 text-sm leading-relaxed text-white/65 transition-colors hover:text-white/80 sm:text-base">
+            My academic background includes a bachelor&apos;s degree in Information Systems and a
             technical degree in Computer Science from IFCE, Cedro campus. Throughout my
             educational journey, I actively participated in interdisciplinary extension
             projects, the PIBIC Junior program, and volunteered as a mentor. These experiences
@@ -101,8 +98,8 @@ export function About() {
                 </motion.span>
 
                 <motion.h3
-                  className="mt-5 text-lg font-semibold text-ink"
-                  whileHover={{ scale: 1.05, color: '#6366f1' }}
+                  className="mt-5 text-lg font-semibold text-ink transition-colors hover:text-accent"
+                  whileHover={{ scale: 1.05 }}
                 >
                   {area.title}
                 </motion.h3>
@@ -127,7 +124,7 @@ export function About() {
                       <p className="text-xs font-semibold uppercase tracking-wide text-accent">
                         {group.label}
                       </p>
-                      <p className="mt-1 text-sm text-ink/80">{group.items.join(', ')}</p>
+                      <p className="mt-1 text-sm text-ink">{group.items.join(', ')}</p>
                     </motion.div>
                   ))}
                 </motion.div>

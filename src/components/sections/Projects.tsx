@@ -52,24 +52,21 @@ export function Projects() {
           transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.3 }}
           whileHover={{ y: -4 }}
           id="contact"
-          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-2xl border border-line/30 bg-surface/50 px-6 py-12 text-center backdrop-blur-sm transition-all duration-300 sm:px-10 sm:py-16 hover:border-line/50 hover:shadow-md"
+          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-2xl border border-white/10 bg-white/5 px-6 py-12 text-center backdrop-blur-sm transition-all duration-300 sm:px-10 sm:py-16 hover:border-white/20 hover:shadow-md"
         >
           <motion.p
-            className="flex items-center justify-center gap-2 text-base font-semibold text-muted sm:text-lg"
+            className="flex items-center justify-center gap-2 text-base font-semibold text-white/70 sm:text-lg"
             whileHover={{ scale: 1.02 }}
           >
             Got an idea? <span aria-hidden="true">→</span>
           </motion.p>
 
-          <motion.h3
-            className="mt-3 text-2xl font-bold text-ink transition-colors sm:text-3xl"
-            whileHover={{ color: 'var(--c-accent)' }}
-          >
+          <motion.h3 className="mt-3 text-2xl font-bold text-white transition-colors hover:text-accent sm:text-3xl">
             Let's build something amazing together
           </motion.h3>
 
           <motion.p
-            className="mt-4 text-sm leading-relaxed text-muted sm:text-base"
+            className="mt-4 text-sm leading-relaxed text-white/60 sm:text-base"
             whileHover={{ opacity: 0.9 }}
           >
             I'm always interested in hearing about new projects, interesting ideas, and partnerships.
@@ -88,7 +85,7 @@ export function Projects() {
                 as="a"
                 href="https://wa.me/5588998427392?text=Ol%C3%A1%2C%20Rodrigo!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
                 target="_blank"
-                variant="default"
+                variant="invert"
                 icon={<MessageSquare size={18} aria-hidden="true" />}
                 className="w-full sm:w-auto"
               >

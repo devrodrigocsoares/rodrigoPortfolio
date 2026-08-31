@@ -54,8 +54,8 @@ export function Hero() {
 
         <motion.span
           aria-hidden="true"
-          className="ml-5 text-accent-dim"
-          whileHover={{ scale: 1.05, color: '#6366f1' }}
+          className="ml-5 text-accent-dim transition-colors hover:text-accent"
+          whileHover={{ scale: 1.05 }}
         >
           {textDev}
           <span className="typewriter-cursor">|</span>
@@ -122,10 +122,7 @@ export function Hero() {
           .
         </p>
 
-        <motion.p
-          className="mt-5 max-w-xl text-base leading-relaxed text-muted"
-          whileHover={{ color: '#4f46e5' }}
-        >
+        <motion.p className="mt-5 max-w-xl text-base leading-relaxed text-muted transition-colors hover:text-ink">
           I combine software engineering, artificial intelligence
           and product thinking to turn complex ideas into simple solutions.
         </motion.p>

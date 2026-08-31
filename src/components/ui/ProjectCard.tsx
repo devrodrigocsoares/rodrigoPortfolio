@@ -14,23 +14,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line/50 bg-surface
         shadow-sm transition-all duration-300 hover:shadow-lg hover:border-line/80 focus-within:shadow-lg focus-within:border-line/80"
     >
-      {/* Image Container — Neutral Background */}
-      <div className="relative aspect-[16/10] overflow-hidden bg-line/10">
-        {project.image ? (
-          <img
-            src={project.image}
-            alt={`${project.title} preview`}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          /* Neutral fallback instead of colorful gradient */
-          <div className="h-full w-full bg-gradient-to-br from-line/20 to-line/5" />
-        )}
-
-        {/* Subtle overlay on hover — much less dominant */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      </div>
+      
 
       {/* Content Container */}
       <div className="flex flex-1 flex-col gap-3 p-6 sm:gap-4">

@@ -41,7 +41,7 @@ export function Footer() {
         </ul>
 
         <p className="text-xs font-mono text-white/40">
-          Handcrafted by me <span aria-hidden="true">•</span> @RodrigoCSoares
+          Handcrafted by me <span aria-hidden="true">•</span> Rodrigo Cadeira Soares
         </p>
       </div>
     </footer>

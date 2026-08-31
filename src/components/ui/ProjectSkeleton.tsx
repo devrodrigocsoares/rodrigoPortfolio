@@ -12,37 +12,30 @@ import { motion } from 'framer-motion'
 function ProjectSkeletonCard() {
   return (
     <motion.div
-      className="flex flex-col overflow-hidden rounded-2xl border border-line bg-surface"
+      className="flex h-full flex-col overflow-hidden rounded-3xl border border-line/50 bg-surface"
       initial={{ opacity: 0.5 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1, repeat: Infinity, repeatType: 'reverse' }}
+      transition={{ duration: 1.5, repeat: Infinity, repeatType: 'reverse' }}
     >
       {/* Image skeleton */}
-      <div className="aspect-[3/2] bg-line/40" />
+      <div className="aspect-[16/10] bg-gradient-to-br from-line/40 to-line/20" />
 
       {/* Content skeleton */}
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className="flex flex-1 flex-col gap-4 p-6">
         {/* Title skeleton */}
-        <div className="h-6 w-3/4 rounded-md bg-line/40" />
-
-        {/* Description skeleton (3 lines) */}
-        <div className="space-y-2">
-          <div className="h-4 w-full rounded-md bg-line/40" />
-          <div className="h-4 w-5/6 rounded-md bg-line/40" />
-          <div className="h-4 w-4/6 rounded-md bg-line/40" />
-        </div>
+        <div className="h-7 w-3/4 rounded-lg bg-line/40" />
 
         {/* Technologies skeleton (4 badges) */}
-        <div className="mt-1 flex flex-wrap gap-2">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="h-6 w-16 rounded-full bg-line/40" />
+        <div className="flex flex-wrap gap-2">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="h-7 w-20 rounded-full bg-line/40" />
           ))}
         </div>
 
         {/* Footer buttons skeleton */}
-        <div className="mt-auto flex items-center gap-4 pt-3">
-          <div className="h-8 w-8 rounded-md bg-line/40" />
-          <div className="h-8 w-8 rounded-md bg-line/40" />
+        <div className="mt-auto flex gap-3 pt-4">
+          <div className="flex-1 h-10 rounded-xl bg-line/40" />
+          <div className="flex-1 h-10 rounded-xl bg-line/40" />
         </div>
       </div>
     </motion.div>
@@ -63,9 +56,9 @@ export function ProjectSkeleton({ count = 6 }: ProjectSkeletonProps) {
       {[...Array(count)].map((_, index) => (
         <motion.div
           key={`skeleton-${index}`}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: (index % 3) * 0.05 }}
+          transition={{ duration: 0.4, delay: index * 0.08 }}
         >
           <ProjectSkeletonCard />
         </motion.div>

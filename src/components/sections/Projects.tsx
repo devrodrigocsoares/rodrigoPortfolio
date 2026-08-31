@@ -11,15 +11,16 @@ export function Projects() {
   const { data: projects, isLoading, error, retry } = useGithubProjects()
 
   return (
-    <section id="projects" className="bg-navy py-24 text-white sm:py-28">
+    <section id="projects" className="bg-navy py-24 text-white sm:py-32 lg:py-40">
       <div className="container-page">
         <SectionTitle
           tone="dark"
-          title="My Projects"
-          description="I'm a bit addicted to building projects. See some from GitHub. Eventually I decided it would be a fun challenge to design and build my own."
+          title="Featured Projects"
+          description="Explore some of my recent work built with modern technologies, best practices, and attention to detail."
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Projects Grid */}
+        <div className="mt-16 grid gap-6 sm:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
           {isLoading && <ProjectSkeleton />}
 
           {error && !isLoading && <ProjectsError error={error} onRetry={retry} />}
@@ -29,35 +30,53 @@ export function Projects() {
             projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.45, delay: (index % 3) * 0.08, ease: 'easeOut' }}
+                viewport={{ once: true, margin: '-100px' }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                  ease: [0.23, 1, 0.32, 1],
+                }}
               >
                 <ProjectCard project={project} />
               </motion.div>
             ))}
         </div>
 
-        <div id="contact" className="mx-auto mt-24 max-w-xl scroll-mt-24 text-center">
-          <p className="flex items-center justify-center gap-2 text-xl font-bold sm:text-2xl">
-            Hi <span aria-hidden="true">👋</span>
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          id="contact"
+          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-3xl border border-line/20 bg-gradient-to-br from-white/5 to-white/5 px-6 py-12 text-center backdrop-blur sm:px-10 sm:py-16"
+        >
+          <p className="flex items-center justify-center gap-2 text-lg font-semibold sm:text-xl">
+            Got an idea? <span aria-hidden="true">💡</span>
           </p>
-          <h3 className="mt-1 text-xl font-bold sm:text-2xl">
-            Interested in collaborating with me?
+          <h3 className="mt-3 text-2xl font-bold sm:text-3xl">
+            Let's build something amazing together
           </h3>
-          <p className="mt-4 text-sm leading-relaxed text-white/65 sm:text-base">
-            I'm always open to discussing machine learning work, portfolios, or partnership
-            opportunities.
+          <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
+            I'm always interested in hearing about new projects, interesting ideas, and partnerships.
+            Feel free to reach out!
           </p>
 
-          <div className="mt-8 flex justify-center">
-            <Button as="a" href="https://wa.me/5588998427392?text=Ol%C3%A1%2C%20Rodrigo!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
-             target="_blank" variant="invert" icon={<MessageSquare size={16} aria-hidden="true" />}>
-              Start a conversation
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
+            <Button
+              as="a"
+              href="https://wa.me/5588998427392?text=Ol%C3%A1%2C%20Rodrigo!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
+              target="_blank"
+              variant="default"
+              icon={<MessageSquare size={18} aria-hidden="true" />}
+              className="w-full sm:w-auto"
+            >
+              Let's chat on WhatsApp
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )

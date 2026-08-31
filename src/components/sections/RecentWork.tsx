@@ -37,7 +37,7 @@ export function RecentWork() {
         />
 
         <motion.div
-          className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
           initial={shouldReduceMotion ? undefined : 'hidden'}
           whileInView={shouldReduceMotion ? undefined : 'visible'}
           viewport={{ once: true, margin: '-60px' }}
@@ -50,17 +50,30 @@ export function RecentWork() {
               target="_blank"
               rel="noreferrer noopener"
               variants={shouldReduceMotion ? undefined : cardVariants}
-              className="group relative overflow-hidden rounded-2xl border border-line shadow-card transition-colors duration-300 hover:border-accent/50"
+              className="group block overflow-hidden rounded-lg border border-line bg-surface transition-colors duration-300 hover:border-accent/60"
               aria-label={`${item.company} — ${item.role}`}
             >
-              <div className="absolute inset-0 z-10 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="overflow-hidden bg-navy/5">
+                <img
+                  src={item.image}
+                  alt={`${item.company} — ${item.role}`}
+                  loading="lazy"
+                  className="aspect-[3/2] w-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0"
+                />
+              </div>
 
-              <img
-                src={item.image}
-                alt={`${item.company} — ${item.role}`}
-                loading="lazy"
-                className="aspect-[3/2] w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
+              <div className="flex items-center justify-between gap-3 border-t border-line px-5 py-4">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-ink">{item.company} — {item.period}</p>
+                  <p className="truncate text-xs text-muted">{item.role}</p>
+                  <p className="truncate text-xs text-muted">{item.description}</p>
+                </div>
+                <Linkedin
+                  size={16}
+                  className="shrink-0 text-muted transition-colors duration-300 group-hover:text-accent"
+                  aria-hidden="true"
+                />
+              </div>
             </motion.a>
           ))}
         </motion.div>

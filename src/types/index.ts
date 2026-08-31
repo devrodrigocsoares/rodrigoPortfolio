@@ -25,6 +25,8 @@ export interface WorkHighlight {
   role: string
   image: string
   linkedinUrl: string
+  description: string
+  period: string
 }
 
 export interface Project {

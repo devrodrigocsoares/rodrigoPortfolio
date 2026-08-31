@@ -39,8 +39,8 @@ export function Hero() {
   const { textDev } = useTypewriter(heroDev,  { disabled: prefersReducedMotion })
 
   return (
-   <section id="top" className="relative overflow-hidden pb-20 pt-16 sm:pt-20">
-  <div className="container-page">
+   <section id="top" className="relative overflow-hidden pb-20 pt-16 sm:pt-10 lg:pt-32 ">
+  <div className="container-page flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center text-center sm:items-start sm:text-left">
     <div className="mx-auto max-w-4xl">
 
       <motion.h1
@@ -48,13 +48,13 @@ export function Hero() {
         animate="show"
         custom={0}
         variants={blurInUp}
-        className="max-w-3xl whitespace-normal sm:whitespace-nowrap text-4xl font-extrabold leading-[1.1] tracking-tight text-ink sm:text-6xl"
+        className="max-w-3xl whitespace-normal sm:whitespace-nowrap lg:text-4xl sm:text-3xl font-bold leading-[1.1] tracking-tight text-ink sm:text-6xl"
       >
         Rodrigo
 
         <motion.span
           aria-hidden="true"
-          className="ml-5 text-accent-dim transition-colors hover:text-accent"
+          className="ml-2  text-accent-dim transition-colors hover:text-accent "
           whileHover={{ scale: 1.05 }}
         >
           {textDev}
@@ -97,7 +97,7 @@ export function Hero() {
         custom={0.4}
         variants={fadeUp}
       >
-        <p className="max-w-2xl text-xl font-medium leading-relaxed text-ink sm:text-2xl">
+        <p className="max-w-2xl sm:text-xl lg:text-xl font-medium leading-relaxed text-ink ">
           Software engineer focused on building
           <motion.span
             className="text-accent"

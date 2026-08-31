@@ -5,7 +5,7 @@
 
 export const githubConfig = {
   /** GitHub username to fetch repositories from */
-  username: 'RodrigoCSoares',
+  username: 'devrodrigocsoares',
 
   /** Maximum number of projects to display in portfolio */
   limit: 6,

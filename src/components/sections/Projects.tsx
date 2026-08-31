@@ -46,36 +46,56 @@ export function Projects() {
 
         {/* Call to Action */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.3 }}
+          whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(99, 102, 241, 0.1)' }}
           id="contact"
-          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-3xl border border-line/20 bg-gradient-to-br from-white/5 to-white/5 px-6 py-12 text-center backdrop-blur sm:px-10 sm:py-16"
+          className="mx-auto mt-24 max-w-2xl scroll-mt-24 rounded-3xl border border-line/20 bg-gradient-to-br from-white/5 to-white/5 px-6 py-12 text-center backdrop-blur transition-all duration-300 sm:px-10 sm:py-16 hover:border-accent/30"
         >
-          <p className="flex items-center justify-center gap-2 text-lg font-semibold sm:text-xl">
+          <motion.p
+            className="flex items-center justify-center gap-2 text-lg font-semibold sm:text-xl"
+            whileHover={{ scale: 1.05 }}
+          >
             Got an idea? <span aria-hidden="true">💡</span>
-          </p>
-          <h3 className="mt-3 text-2xl font-bold sm:text-3xl">
+          </motion.p>
+
+          <motion.h3
+            className="mt-3 text-2xl font-bold sm:text-3xl"
+            whileHover={{ color: '#6366f1' }}
+          >
             Let's build something amazing together
-          </h3>
-          <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
+          </motion.h3>
+
+          <motion.p
+            className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg"
+            whileHover={{ color: 'rgba(255, 255, 255, 0.85)' }}
+          >
             I'm always interested in hearing about new projects, interesting ideas, and partnerships.
             Feel free to reach out!
-          </p>
+          </motion.p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4">
-            <Button
-              as="a"
-              href="https://wa.me/5588998427392?text=Ol%C3%A1%2C%20Rodrigo!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
-              target="_blank"
-              variant="default"
-              icon={<MessageSquare size={18} aria-hidden="true" />}
-              className="w-full sm:w-auto"
-            >
-              Let's chat on WhatsApp
-            </Button>
-          </div>
+          <motion.div
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center sm:gap-4"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                as="a"
+                href="https://wa.me/5588998427392?text=Ol%C3%A1%2C%20Rodrigo!%20Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto."
+                target="_blank"
+                variant="default"
+                icon={<MessageSquare size={18} aria-hidden="true" />}
+                className="w-full sm:w-auto"
+              >
+                Let's chat on WhatsApp
+              </Button>
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

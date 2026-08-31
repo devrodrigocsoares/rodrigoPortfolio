@@ -9,52 +9,128 @@ const iconMap: Record<FocusArea['icon'], typeof Layers> = {
   server: Server,
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40, rotateX: -20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 90,
+      damping: 20,
+      delay: i * 0.1,
+    },
+  }),
+}
+
+const iconVariants = {
+  hidden: { scale: 0, rotateZ: -180 },
+  visible: (i: number) => ({
+    scale: 1,
+    rotateZ: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 130,
+      damping: 14,
+      delay: i * 0.1 + 0.2,
+    },
+  }),
+}
+
 export function About() {
   return (
     <section id="about" className="bg-navy pb-28 pt-20 text-white sm:pb-36">
       <div className="container-page">
-        <div className="mx-auto max-w-2xl text-center">
+        <motion.div
+          className="mx-auto max-w-2xl text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+        >
           <h2 className="text-2xl font-bold sm:text-3xl">Hi, I'm Rodrigo. Nice to meet you!</h2>
-          <p className="mt-5 text-sm leading-relaxed text-white/65 sm:text-base">
+          <motion.p
+            className="mt-5 text-sm leading-relaxed text-white/65 sm:text-base"
+            whileHover={{ color: 'rgba(255, 255, 255, 0.8)' }}
+          >
             My academic background includes a bachelor's degree in Information Systems and a
             technical degree in Computer Science from IFCE, Cedro campus. Throughout my
             educational journey, I actively participated in interdisciplinary extension
             projects, the PIBIC Junior program, and volunteered as a mentor. These experiences
             were crucial in developing my collaborative skills and enhancing my ability to work
             effectively in teams.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        <div className="relative mt-14 grid gap-6 rounded-2xl bg-surface p-2 shadow-2xl sm:mt-16 sm:grid-cols-3 sm:gap-0 sm:p-0">
+        <div className="relative mt-14 grid gap-6 rounded-2xl bg-surface p-2 shadow-2xl sm:mt-16 sm:grid-cols-3 sm:gap-0 sm:p-0 [perspective:1000px]">
           {focusAreas.map((area, index) => {
             const Icon = iconMap[area.icon]
             return (
               <motion.div
                 key={area.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                custom={index}
+                variants={cardVariants}
+                initial="hidden"
+                whileInView="visible"
                 viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: 'easeOut' }}
-                className={`rounded-xl px-6 py-10 text-center sm:rounded-none sm:px-8 sm:py-12 ${
+                whileHover={{
+                  y: -4,
+                  rotateX: 5,
+                  rotateY: 2,
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                }}
+                className={`rounded-xl px-6 py-10 text-center transition-all duration-300 sm:rounded-none sm:px-8 sm:py-12 ${
                   index !== 0 ? 'sm:border-l sm:border-line' : ''
                 }`}
               >
-                <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white">
+                <motion.span
+                  custom={index}
+                  variants={iconVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  whileHover={{
+                    scale: 1.15,
+                    rotateZ: 360,
+                    boxShadow: '0 12px 24px rgba(99, 102, 241, 0.3)',
+                  }}
+                  className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white transition-all duration-300"
+                >
                   <Icon size={20} aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 text-lg font-semibold text-ink">{area.title}</h3>
+                </motion.span>
+
+                <motion.h3
+                  className="mt-5 text-lg font-semibold text-ink"
+                  whileHover={{ scale: 1.05, color: '#6366f1' }}
+                >
+                  {area.title}
+                </motion.h3>
+
                 <p className="mt-3 text-sm leading-relaxed text-muted">{area.description}</p>
 
-                <div className="mt-6 space-y-4">
-                  {area.groups.map((group) => (
-                    <div key={group.label}>
+                <motion.div
+                  className="mt-6 space-y-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                >
+                  {area.groups.map((group, gIdx) => (
+                    <motion.div
+                      key={group.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 + gIdx * 0.05 + 0.4 }}
+                    >
                       <p className="text-xs font-semibold uppercase tracking-wide text-accent">
                         {group.label}
                       </p>
                       <p className="mt-1 text-sm text-ink/80">{group.items.join(', ')}</p>
-                    </div>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               </motion.div>
             )
           })}

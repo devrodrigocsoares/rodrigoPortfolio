@@ -92,9 +92,9 @@ export function Header() {
         {/* Logo */}
         <motion.a
           href="#top"
-          className="text-2xl font-display tracking-tight text-ink"
+          className="text-2xl font-display tracking-tight text-ink transition-colors duration-200 hover:text-accent"
           aria-label="Rodrigo Soares, back to top"
-          whileHover={{ scale: 1.08, color: '#6366f1' }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
           transition={{ type: 'spring', stiffness: 400, damping: 10 }}
         >
@@ -121,8 +121,8 @@ export function Header() {
                 <motion.a
                   href={link.href}
                   onClick={() => setActiveSection(link.href)}
-                  className="group relative text-sm font-medium text-ink/70 transition-colors duration-200"
-                  whileHover={{ color: '#6366f1' }}
+                  className="group relative text-sm font-medium text-ink/70 transition-colors duration-200 hover:text-accent"
+                  whileHover={{}}
                 >
                   {link.label}
 

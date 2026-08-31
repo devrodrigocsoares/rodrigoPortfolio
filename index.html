@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Applies the saved theme before React mounts, to avoid a flash of the wrong theme. -->
+    <script>
+      ;(function () {
+        try {
+          var stored = localStorage.getItem('portfolio-theme')
+          var theme = stored === 'dark' ? 'dark' : 'light'
+          document.documentElement.setAttribute('data-theme', theme)
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light')
+        }
+      })()
+    </script>
+
+    <title>Rodrigo Soares — AI &amp; ML Engineer</title>
+    <meta
+      name="description"
+      content="Rodrigo Soares is an AI & ML Engineer and full-stack developer specializing in Python, machine learning, NLP, and modern web interfaces. Explore his work, skills, and projects."
+    />
+    <meta name="author" content="Rodrigo Soares" />
+    <meta name="theme-color" content="#0B0E1A" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Rodrigo Soares — AI & ML Engineer" />
+    <meta
+      property="og:description"
+      content="AI & ML Engineer and full-stack developer specializing in Python, machine learning, NLP, and modern web interfaces."
+    />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rodrigo Soares — AI & ML Engineer" />
+    <meta
+      name="twitter:description"
+      content="AI & ML Engineer and full-stack developer specializing in Python, machine learning, NLP, and modern web interfaces."
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

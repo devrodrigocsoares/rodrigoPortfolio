@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme (default) — values are "R G B" so Tailwind can apply opacity modifiers. */
+    --c-ink: 11 14 26;
+    --c-paper: 255 255 255;
+    --c-surface: 255 255 255;
+    --c-navy: 11 14 26;
+    --c-muted: 91 96 114;
+    --c-muted-light: 139 144 160;
+    --c-line: 231 232 238;
+    --c-accent: 47 111 237;
+    --c-accent-dim: 31 79 190;
+    --c-accent-soft: 234 241 255;
+  }
+
+  html[data-theme='dark'] {
+    color-scheme: dark;
+    --c-ink: 237 239 246;
+    --c-paper: 8 10 18;
+    --c-surface: 22 25 33;
+    --c-navy: 14 17 26;
+    --c-muted: 156 162 184;
+    --c-muted-light: 108 114 138;
+    --c-line: 42 46 58;
+    --c-accent: 90 148 255;
+    --c-accent-dim: 150 190 255;
+    --c-accent-soft: 30 37 56;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+
+  /* Light mode: soft blue → white, spacious and airy. */
+  html[data-theme='light'] body {
+    background-image: linear-gradient(150deg, #e3ecff 0%, #f4f8ff 42%, #ffffff 78%);
+    background-attachment: fixed;
+  }
+
+  /* Dark mode: near-black → sophisticated charcoal, never a flat black. */
+  html[data-theme='dark'] body {
+    background-image: linear-gradient(160deg, #05060a 0%, #0f1117 45%, #1c1f29 100%);
+    background-attachment: fixed;
+  }
+
+  /* Subtle definition between the always-dark "navy" sections (About,
+     Projects, Footer) and the dark-mode page background, since both are
+     dark and would otherwise blend into each other. */
+  html[data-theme='dark'] .bg-navy {
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      inset 0 -1px 0 rgb(255 255 255 / 0.05);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display;
+  }
+
+  ::selection {
+    @apply bg-accent/20 text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-content px-6 sm:px-8 lg:px-6;
+  }
+
+  .typewriter-cursor {
+    @apply ml-0.5 inline-block;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs tracking-wider text-accent uppercase;
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full border border-ink/15 px-5 py-2.5 text-sm font-medium
+      text-ink transition-all duration-200 hover:border-ink hover:-translate-y-0.5 hover:shadow-card
+      focus-visible:outline-offset-4;
+  }
+
+  .btn-invert {
+    @apply border-white/20 text-white hover:border-white hover:bg-white hover:text-navy;
+  }
+
+  .btn-solid {
+    @apply bg-ink text-paper border-ink hover:bg-accent hover:border-accent hover:text-white;
+  }
+
+  /* Static (non-theme-reactive) copies of the two page-background gradients,
+     used only by <ThemeTransitionOverlay />. The overlay shows the OUTGOING
+     theme while the real page underneath has already switched to the new
+     one, so these values intentionally don't read the CSS variables above —
+     they must stay fixed regardless of the current data-theme attribute. */
+  .theme-reveal--light {
+    background-image: linear-gradient(150deg, #e3ecff 0%, #f4f8ff 42%, #ffffff 78%);
+  }
+
+  .theme-reveal--dark {
+    background-image: linear-gradient(160deg, #05060a 0%, #0f1117 45%, #1c1f29 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

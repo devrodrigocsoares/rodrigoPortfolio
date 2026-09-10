@@ -62,14 +62,14 @@ export function Projects() {
           </motion.p>
 
           <motion.h3 className="mt-3 text-2xl font-bold text-white transition-colors hover:text-accent sm:text-3xl">
-            Let's build something amazing together
+            Let&apos;s build something amazing together
           </motion.h3>
 
           <motion.p
             className="mt-4 text-sm leading-relaxed text-white/60 sm:text-base"
             whileHover={{ opacity: 0.9 }}
           >
-            I'm always interested in hearing about new projects, interesting ideas, and partnerships.
+            I&apos;m always interested in hearing about new projects, interesting ideas, and partnerships.
             Feel free to reach out!
           </motion.p>
 
@@ -89,7 +89,7 @@ export function Projects() {
                 icon={<MessageSquare size={18} aria-hidden="true" />}
                 className="w-full sm:w-auto"
               >
-                Let's chat on WhatsApp
+                Let&apos;s chat on WhatsApp
               </Button>
             </motion.div>
           </motion.div>

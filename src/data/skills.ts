@@ -3,15 +3,15 @@ import { SkillGroup } from '@/types'
 export const skillGroups: SkillGroup[] = [
   {
     category: 'Frontend',
-    items: ['React', 'TypeScript', 'JavaScript', 'HTML', 'CSS', 'Tailwind CSS'],
+    items: ['React', 'TypeScript', 'JavaScript', 'Tailwind CSS'],
   },
   {
     category: 'Backend',
-    items: ['Node.js', 'Python', 'FastAPI'],
+    items: ['Node.js', 'Python'],
   },
   {
     category: 'Database',
-    items: ['PostgreSQL', 'MySQL', 'Firebase'],
+    items: ['PostgreSQL', 'MySQL'],
   },
   {
     category: 'DevOps/Cloud',

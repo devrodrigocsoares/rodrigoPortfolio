@@ -39,16 +39,26 @@
     @apply bg-paper text-ink font-body antialiased;
   }
 
-  /* Light mode: soft blue → white, spacious and airy. */
-  html[data-theme='light'] body {
-    background-image: linear-gradient(150deg, #e3ecff 0%, #f4f8ff 42%, #ffffff 78%);
-    background-attachment: fixed;
+  /* Page background gradients (light: soft blue → white; dark: near-black →
+     charcoal, never a flat black).
+     Painted on a fixed pseudo-element instead of `background-attachment: fixed`
+     on <body>: the latter forces the browser to repaint the whole gradient on
+     every scroll frame (and iOS Safari ignores it), which reads as scroll jank.
+     A fixed layer is composited once and simply stays put. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
   }
 
-  /* Dark mode: near-black → sophisticated charcoal, never a flat black. */
-  html[data-theme='dark'] body {
+  html[data-theme='light'] body::before {
+    background-image: linear-gradient(150deg, #e3ecff 0%, #f4f8ff 42%, #ffffff 78%);
+  }
+
+  html[data-theme='dark'] body::before {
     background-image: linear-gradient(160deg, #05060a 0%, #0f1117 45%, #1c1f29 100%);
-    background-attachment: fixed;
   }
 
   /* Subtle definition between the always-dark "navy" sections (About,
@@ -114,6 +124,49 @@
 
   .btn-solid {
     @apply bg-ink text-paper border-ink hover:bg-accent hover:border-accent hover:text-white;
+  }
+
+  /* "About" portrait — dissolves into the section's navy background.
+     Mobile: fades out downward. Desktop: fades out on the left (where the copy sits)
+     and at the top/bottom, so no hard photo edge is ever visible.
+     Two masks are intersected on desktop: -webkit-mask-composite: source-in is the
+     older WebKit/Blink spelling of `mask-composite: intersect`. */
+  .about-photo {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 10%,
+      #000 34%,
+      rgb(0 0 0 / 0.55) 64%,
+      transparent 96%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 10%,
+      #000 34%,
+      rgb(0 0 0 / 0.55) 64%,
+      transparent 96%
+    );
+  }
+
+  @media (min-width: 1024px) {
+    .about-photo {
+      -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.5) 22%, #000 48%),
+        linear-gradient(to bottom, transparent 0%, #000 14%, #000 60%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.5) 22%, #000 48%),
+        linear-gradient(to bottom, transparent 0%, #000 14%, #000 60%, transparent 100%);
+      mask-composite: intersect;
+    }
+  }
+
+  /* Soft glow in the accent colour behind the portrait, so the photo feels lit by
+     the site's palette instead of pasted on it. */
+  .about-photo-glow {
+    background: radial-gradient(60% 55% at 62% 36%, rgb(var(--c-accent) / 0.3), transparent 72%);
   }
 
   /* Static (non-theme-reactive) copies of the two page-background gradients,

@@ -62,9 +62,9 @@ export function ProjectSkeleton({ count = 6 }: ProjectSkeletonProps) {
       {[...Array(count)].map((_, index) => (
         <motion.div
           key={`skeleton-${index}`}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: index * 0.08 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.25 }}
         >
           <ProjectSkeletonCard />
         </motion.div>

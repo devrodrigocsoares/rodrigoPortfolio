@@ -2,40 +2,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { navLinks } from '@/data/nav'
+import { EASE_OUT } from '@/lib/motion'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
-
-const linkVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      damping: 20,
-      delay: i * 0.05,
-    },
-  }),
-}
-
-const menuItemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      damping: 15,
-      delay: i * 0.06,
-    },
-  }),
-  exit: {
-    opacity: 0,
-    x: -20,
-    transition: { duration: 0.2 },
-  },
-}
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -87,7 +55,7 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
         isScrolled
           ? 'bg-surface/95 backdrop-blur border-b border-line/50 shadow-lg'
           : 'bg-surface/50 backdrop-blur-sm'
@@ -102,9 +70,8 @@ export function Header() {
           href="#top"
           className="group relative text-2xl font-display tracking-tight text-ink transition-colors duration-200 hover:text-accent"
           aria-label="Rodrigo Soares, back to top"
-          whileHover={{ scale: 1.08 }}
-          whileTap={{ scale: 0.95 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ duration: 0.15 }}
         >
           {/* Mobile / touch: static mark, no crossfade, no reserved width */}
           <span aria-hidden="true" className="md:hidden">
@@ -136,93 +103,53 @@ export function Header() {
         </motion.a>
 
         {/* Desktop Menu */}
-        <motion.ul
-          className="hidden items-center gap-8 md:flex"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-        >
-          {navLinks.map((link, i) => {
+        <ul className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => {
             const isActive = activeSection === link.href
             return (
-              <motion.li
-                key={link.href}
-                custom={i}
-                variants={linkVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <motion.a
+              <li key={link.href}>
+                <a
                   href={link.href}
                   onClick={() => setActiveSection(link.href)}
                   className="group relative text-sm font-medium text-ink/70 transition-colors duration-200 hover:text-accent"
-                  whileHover={{}}
                 >
                   {link.label}
 
-                  {/* Animated underline */}
-                  <motion.span
-                    className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-accent to-accent-dim"
-                    initial={{ width: '0%' }}
-                    whileHover={{ width: '100%' }}
-                    animate={{ width: isActive ? '100%' : '0%' }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  {/* Active underline — transform only, so it never triggers layout */}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute -bottom-1 left-0 h-0.5 w-full origin-left bg-gradient-to-r from-accent to-accent-dim transition-transform duration-300 ease-out ${
+                      isActive ? 'scale-x-100' : 'scale-x-0'
+                    }`}
                   />
 
                   {/* Active dot indicator */}
-                  <motion.span
-                    className="absolute -right-5 top-1/2 h-1.5 w-1.5 rounded-full bg-accent"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: isActive ? 1 : 0 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute -right-5 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-accent transition-transform duration-200 ease-out ${
+                      isActive ? 'scale-100' : 'scale-0'
+                    }`}
                   />
-                </motion.a>
-              </motion.li>
+                </a>
+              </li>
             )
           })}
-        </motion.ul>
+        </ul>
 
         {/* Desktop Actions */}
-        <motion.div
-          className="hidden items-center gap-4 md:flex"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
+        <div className="hidden items-center gap-4 md:flex">
           <ThemeToggle />
 
-          <motion.a
+          <a
             href="#contact"
-            className="group relative overflow-hidden rounded-xl bg-accent px-6 py-2.5 font-medium text-white transition-all duration-200"
-            whileHover={{
-              boxShadow: '0 12px 24px rgba(99, 102, 241, 0.4)',
-            }}
-            whileTap={{ scale: 0.95 }}
+            className="rounded-xl bg-accent px-6 py-2.5 font-medium text-white transition-[box-shadow,transform] duration-200 hover:shadow-[0_10px_24px_-8px_rgb(var(--c-accent)/0.55)] active:scale-[0.98]"
           >
-            {/* Glow background */}
-            <motion.span
-              className="absolute inset-0 -z-10 bg-gradient-to-r from-accent via-accent-dim to-accent opacity-0"
-              whileHover={{ opacity: 0.6 }}
-              transition={{ duration: 0.3 }}
-            />
-
-            {/* Text */}
-            <motion.span
-              className="relative block"
-              whileHover={{ y: -1 }}
-            >
-              Let&apos;s talk
-            </motion.span>
-          </motion.a>
-        </motion.div>
+            Let&apos;s talk
+          </a>
+        </div>
 
         {/* Mobile Menu Toggle */}
-        <motion.div
-          className="flex items-center gap-2 md:hidden"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
+        <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
 
           <motion.button
@@ -236,7 +163,6 @@ export function Header() {
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
             onClick={() => setIsMenuOpen((open) => !open)}
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <motion.div
@@ -249,7 +175,7 @@ export function Header() {
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </motion.div>
           </motion.button>
-        </motion.div>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
@@ -257,78 +183,46 @@ export function Header() {
         {isMenuOpen && (
           <motion.div
             id="mobile-menu"
-            initial={{ opacity: 0, height: 0, backdropFilter: 'blur(0px)' }}
-            animate={{ opacity: 1, height: 'auto', backdropFilter: 'blur(10px)' }}
-            exit={{ opacity: 0, height: 0, backdropFilter: 'blur(0px)' }}
-            transition={{ type: 'spring', stiffness: 400, damping: 40 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: EASE_OUT }}
             className="overflow-hidden border-t border-line/50 bg-gradient-to-b from-surface/80 to-surface/40 backdrop-blur-md md:hidden"
           >
-            <motion.ul
-              className="container-page flex flex-col gap-1 py-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
-              {navLinks.map((link, i) => {
+            <ul className="container-page flex flex-col gap-1 py-4">
+              {navLinks.map((link) => {
                 const isActive = activeSection === link.href
                 return (
-                  <motion.li
-                    key={link.href}
-                    custom={i}
-                    variants={menuItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <motion.a
+                  <li key={link.href}>
+                    <a
                       href={link.href}
                       onClick={() => {
                         setIsMenuOpen(false)
                         setActiveSection(link.href)
                       }}
-                      className={`relative block rounded-lg px-3 py-3 text-base font-medium transition-all duration-200 ${
+                      className={`relative flex items-center gap-2 rounded-lg px-3 py-3 text-base font-medium transition-colors duration-200 ${
                         isActive
                           ? 'bg-accent/15 text-accent'
-                          : 'text-ink hover:bg-accent/5 hover:text-accent'
+                          : 'text-ink hover:bg-accent/5 hover:text-accent active:bg-accent/10'
                       }`}
-                      whileHover={{ x: 4 }}
-                      whileTap={{ scale: 0.98 }}
                     >
-                      <motion.span
-                        className="flex items-center gap-2"
-                        whileHover={{ x: 2 }}
-                      >
-                        {isActive && (
-                          <motion.span
-                            className="h-1.5 w-1.5 rounded-full bg-accent"
-                            layoutId="active-indicator"
-                            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                          />
-                        )}
-                        {link.label}
-                      </motion.span>
-                    </motion.a>
-                  </motion.li>
+                      {isActive && <span className="h-1.5 w-1.5 rounded-full bg-accent" />}
+                      {link.label}
+                    </a>
+                  </li>
                 )
               })}
 
-              <motion.li
-                className="pt-2"
-                custom={navLinks.length}
-                variants={menuItemVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                <motion.a
+              <li className="pt-2">
+                <a
                   href="#contact"
                   onClick={() => setIsMenuOpen(false)}
                   className="btn btn-solid w-full justify-center"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
                 >
                   Let&apos;s talk
-                </motion.a>
-              </motion.li>
-            </motion.ul>
+                </a>
+              </li>
+            </ul>
           </motion.div>
         )}
       </AnimatePresence>

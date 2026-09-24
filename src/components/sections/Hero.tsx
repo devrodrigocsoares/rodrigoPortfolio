@@ -3,35 +3,14 @@ import { heroSkills } from '@/data/heroSkills'
 import { useTypewriter } from '@/hooks/useTypewriter'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { heroDev } from '@/data/heroDev'
+import { revealUp } from '@/lib/motion'
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      damping: 15,
-      delay,
-    },
-  }),
-}
-
-const blurInUp = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(10px)' },
-  show: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    filter: 'blur(0px)',
-    transition: {
-      type: 'spring',
-      stiffness: 90,
-      damping: 20,
-      delay,
-    },
-  }),
-}
+// A frase mais longa de cada typewriter. Ela é renderizada invisível para
+// reservar o espaço máximo, assim o layout não muda de tamanho (nem desliza,
+// quando o texto está centralizado) a cada letra digitada ou apagada.
+const longest = (words: string[]) => words.reduce((a, b) => (b.length > a.length ? b : a), '')
+const longestDev = longest(heroDev)
+const longestSkill = longest(heroSkills)
 
 export function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -45,21 +24,29 @@ export function Hero() {
 
       <motion.h1
         initial="hidden"
-        animate="show"
+        animate="visible"
         custom={0}
-        variants={blurInUp}
-        className="max-w-3xl whitespace-normal sm:whitespace-nowrap text-4xl font-bold leading-[1.1] tracking-tight text-ink "
+        variants={revealUp}
+        className="max-w-3xl min-h-[2.2em] whitespace-normal sm:min-h-0 sm:whitespace-nowrap text-4xl font-bold leading-[1.1] tracking-tight text-ink "
       >
         Rodrigo
 
-        <motion.span
-          aria-hidden="true"
-          className="ml-2 text-accent-dim transition-colors hover:text-accent "
-          whileHover={{ scale: 1.05 }}
-        >
-          {textDev}
-          <span className="typewriter-cursor">|</span>
-        </motion.span>
+        {/* No sm+ o título é sempre uma linha: o typewriter ocupa uma caixa de
+            largura fixa. No mobile o texto quebra naturalmente e o h1 reserva
+            2 linhas (min-h) para o conteúdo abaixo não pular. */}
+        <span className="ml-2 sm:inline-grid sm:text-left">
+          <span aria-hidden="true" className="invisible col-start-1 row-start-1 hidden sm:block">
+            {longestDev}
+            <span className="ml-0.5 inline-block">|</span>
+          </span>
+          <span
+            aria-hidden="true"
+            className="col-start-1 row-start-1 text-accent-dim transition-colors hover:text-accent"
+          >
+            {textDev}
+            <span className="typewriter-cursor">|</span>
+          </span>
+        </span>
 
         <span className="sr-only">
           {heroDev.join(',')}
@@ -68,21 +55,21 @@ export function Hero() {
 
       <motion.p
         initial="hidden"
-        animate="show"
-        custom={0.2}
-        variants={blurInUp}
+        animate="visible"
+        custom={0.1}
+        variants={revealUp}
         className="mt-5 min-h-[1.75rem] font-mono text-sm text-muted sm:text-base"
       >
-       
-
-        <motion.span
-          aria-hidden="true"
-          className="text-accent-dim"
-          whileHover={{ scale: 1.02 }}
-        >
-          {text}
-          <span className="typewriter-cursor">|</span>
-        </motion.span>
+        <span className="inline-grid text-left">
+          <span aria-hidden="true" className="invisible col-start-1 row-start-1">
+            {longestSkill}
+            <span className="ml-0.5 inline-block">|</span>
+          </span>
+          <span aria-hidden="true" className="col-start-1 row-start-1 text-accent-dim">
+            {text}
+            <span className="typewriter-cursor">|</span>
+          </span>
+        </span>
 
         <span className="sr-only">
           {heroSkills.join(',')}
@@ -93,32 +80,17 @@ export function Hero() {
 
        <motion.div
         initial="hidden"
-        animate="show"
-        custom={0.4}
-        variants={fadeUp}
+        animate="visible"
+        custom={0.2}
+        variants={revealUp}
       >
         <p className="max-w-2xl sm:text-xl lg:text-xl font-medium leading-relaxed text-ink ">
           Software engineer focused on building
-          <motion.span
-            className="text-accent"
-            whileHover={{ scale: 1.05, display: 'inline' }}
-          >
-            {' modern products'}
-          </motion.span>
+          <span className="text-accent">{' modern products'}</span>
           ,
-          <motion.span
-            className="text-accent"
-            whileHover={{ scale: 1.05 }}
-          >
-            {' intelligent systems'}
-          </motion.span>
+          <span className="text-accent">{' intelligent systems'}</span>
           {' and'}
-          <motion.span
-            className="text-accent"
-            whileHover={{ scale: 1.05 }}
-          >
-            {' meaningful digital experiences'}
-          </motion.span>
+          <span className="text-accent">{' meaningful digital experiences'}</span>
           .
         </p>
 

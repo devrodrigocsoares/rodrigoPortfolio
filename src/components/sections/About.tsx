@@ -1,6 +1,9 @@
+import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { Layers, Server, Terminal } from 'lucide-react'
 import { focusAreas } from '@/data/focusAreas'
+import { aboutPhoto } from '@/data/aboutPhoto'
+import { revealUp } from '@/lib/motion'
 import { FocusArea } from '@/types'
 
 const iconMap: Record<FocusArea['icon'], typeof Layers> = {
@@ -20,25 +23,96 @@ const cardVariants = {
   }),
 }
 
-export function About() {
-  const shouldReduceMotion = useReducedMotion()
+/**
+ * The portrait as part of the section's background.
+ *
+ * - Desktop: a tall column bleeding off the right edge of the screen. It dissolves
+ *   to navy on its left and bottom edges, so the copy on the left never touches it.
+ * - Mobile: a banner across the top that dissolves downward; the heading starts
+ *   where the photo is already almost fully navy.
+ * The masks live in index.css (`.about-photo`), the glow in `.about-photo-glow`.
+ */
+function AboutPhoto({ src }: { src: string }) {
+  const imgRef = useRef<HTMLImageElement>(null)
+  const [loaded, setLoaded] = useState(false)
+
+  // Covers images that finished loading (e.g. from cache) before React attached onLoad.
+  useEffect(() => {
+    if (imgRef.current?.complete) setLoaded(true)
+  }, [])
 
   return (
-    <section id="about" className="bg-navy pb-28 pt-20 text-white sm:pb-36">
-      <div className="container-page">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-2xl font-bold sm:text-3xl">Hi, I&apos;m Rodrigo. Nice to meet you!</h2>
-          <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
-            My academic background includes a bachelor&apos;s degree in Information Systems and a
-            technical degree in Computer Science from IFCE, Cedro campus. Throughout my
-            educational journey, I actively participated in interdisciplinary extension
-            projects, the PIBIC Junior program, and volunteered as a mentor. These experiences
-            were crucial in developing my collaborative skills and enhancing my ability to work
-            effectively in teams.
-          </p>
-        </div>
+    <div
+      className="pointer-events-none absolute inset-x-0 top-0 h-[26rem] sm:h-[30rem]
+        lg:inset-y-0 lg:left-auto lg:right-0 lg:h-auto lg:w-[54%]"
+    >
+      <div aria-hidden="true" className="about-photo-glow absolute inset-0" />
+      <img
+        ref={imgRef}
+        src={src}
+        alt={aboutPhoto.alt}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        style={{ objectPosition: aboutPhoto.objectPosition }}
+        className={`about-photo absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+    </div>
+  )
+}
 
-        <div className="relative mt-14 grid gap-6 rounded-2xl bg-surface p-2 shadow-2xl sm:mt-16 sm:grid-cols-3 sm:gap-0 sm:p-0">
+export function About() {
+  const shouldReduceMotion = useReducedMotion()
+  const photoSrc = aboutPhoto.src
+
+  return (
+    <section id="about" className="relative overflow-hidden bg-navy pb-28 text-white sm:pb-36">
+      {/* Intro band: portrait in the background, copy in the foreground */}
+      <div
+        className={`relative ${
+          photoSrc ? 'pt-[19rem] sm:pt-[22rem] lg:flex lg:min-h-[36rem] lg:items-center lg:pb-16 lg:pt-32 xl:min-h-[40rem]' : 'pt-20'
+        }`}
+      >
+        {photoSrc && <AboutPhoto src={photoSrc} />}
+
+        {/* w-full: as a flex item on desktop, container-page (mx-auto) would otherwise shrink to
+            its content and center itself instead of spanning the container. */}
+        <div className="container-page relative w-full">
+          <motion.div
+            variants={revealUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            className={
+              photoSrc
+                ? 'mx-auto max-w-2xl text-center lg:mx-0 lg:max-w-[28rem] lg:text-left xl:max-w-[32rem]'
+                : 'mx-auto max-w-2xl text-center'
+            }
+          >
+            <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+              Hi, I&apos;m Rodrigo. Nice to meet you!
+            </h2>
+            <p className="mt-5 text-sm leading-relaxed text-white/75 sm:text-base">
+              My academic background includes a bachelor&apos;s degree in Information Systems and a
+              technical degree in Computer Science from IFCE, Cedro campus. Throughout my
+              educational journey, I actively participated in interdisciplinary extension
+              projects, the PIBIC Junior program, and volunteered as a mentor. These experiences
+              were crucial in developing my collaborative skills and enhancing my ability to work
+              effectively in teams.
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="container-page">
+        {/* With a photo, the intro band already provides the spacing on desktop. */}
+        <div
+          className={`relative mt-14 grid gap-6 rounded-2xl bg-surface p-2 shadow-2xl sm:mt-16 sm:grid-cols-3 sm:gap-0 sm:p-0 ${
+            photoSrc ? 'lg:mt-0' : ''
+          }`}
+        >
           {focusAreas.map((area, index) => {
             const Icon = iconMap[area.icon]
             return (

@@ -41,7 +41,7 @@ export function ThemeToggle({ className = '' }: ThemeToggleProps) {
           initial={{ rotate: -90, scale: 0.4, opacity: 0 }}
           animate={{ rotate: 0, scale: 1, opacity: 1 }}
           exit={{ rotate: 90, scale: 0.4, opacity: 0 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
+          transition={{ duration: 0.16, ease: 'easeOut' }}
           className="absolute inset-0 flex items-center justify-center"
         >
           {isDark ? (

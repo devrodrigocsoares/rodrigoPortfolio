@@ -23,13 +23,14 @@ Build for production with `npm run build`, and preview that build with `npm run 
 
 ```
 src/
-├── assets/              # local static assets used inside components
+├── assets/              # local static assets — drop `about-photo.(jpg|png|webp|avif)` here for the About section
 ├── components/
 │   ├── ui/              # Button, Badge, SectionTitle, ProjectCard
 │   ├── layout/           # Header (nav), Footer
 │   └── sections/         # Hero, About, TechStack, RecentWork, Projects
 ├── data/                 # all editable content lives here
 ├── hooks/                # usePrefersReducedMotion
+├── lib/                  # motion.ts — shared easing + entrance variant for all animations
 ├── pages/                # Home.tsx composes the sections
 ├── types/                # shared TypeScript interfaces
 └── App.tsx / main.tsx / index.css
